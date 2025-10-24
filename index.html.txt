@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPortal Pro - Enhanced Educational Gaming Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--light-bg);
+            padding: 80px 0;
+            border-radius: 30px 30px 0 0;
+            margin-top: -30px;
+            position: relative;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .settings-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .settings-content {
+            padding: 2rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #cbd5e1;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle.active {
+            background: var(--success);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle.active .toggle-slider {
+            transform: translateX(24px);
+        }
+
+        /* Custom Select */
+        .custom-select {
+            position: relative;
+            min-width: 150px;
+        }
+
+        .select-trigger {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .select-trigger:hover {
+            border-color: var(--primary-color);
+        }
+
+        .select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 10;
+        }
+
+        .select-options.active {
+            display: block;
+        }
+
+        .select-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .select-option:hover {
+            background: #f1f5f9;
+        }
+
+        /* Games Section */
+        .games-section {
+            margin-top: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            min-width: 200px;
+            backdrop-filter: blur(20px);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-value {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Panic Key Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .panic-key-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+
+        .panic-key-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .status-bar {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles */
+        button:focus,
+        input:focus,
+        select:focus,
+        a:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light-bg: #0f172a;
+                --text-primary: #f1f5f9;
+                --text-secondary: #94a3b8;
+            }
+
+            body {
+                background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            }
+
+            .main-content {
+                background: var(--dark-bg);
+            }
+
+            .feature-card,
+            .settings-panel,
+            .game-card {
+                background: #1e293b;
+                color: var(--text-primary);
+            }
+
+            .setting-item {
+                border-color: #334155;
+            }
+
+            .custom-select .select-trigger,
+            .custom-select .select-options,
+            .panic-key-input {
+                background: #1e293b;
+                border-color: #334155;
+                color: var(--text-primary);
+            }
+
+            .tag {
+                background: #334155;
+                color: #cbd5e1;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                EduPortal Pro
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#games" class="nav-link">Games</a></li>
+                <li><a href="#settings" class="nav-link">Settings</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Enhanced Educational Gaming Portal</h1>
+            <p>Experience the future of learning with our advanced gaming platform featuring modern design, enhanced security, and immersive educational experiences.</p>
+            <div class="cta-buttons">
+                <a href="#games" class="btn btn-primary">
+                    <i class="fas fa-play"></i>
+                    Start Learning
+                </a>
+                <a href="#settings" class="btn btn-secondary">
+                    <i class="fas fa-cog"></i>
+                    Customize
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Features Grid -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Advanced Security</h3>
+                        <p class="feature-description">Military-grade encryption and anti-detection features keep your activities private and secure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="feature-title">Customizable Themes</h3>
+                        <p class="feature-description">Choose from 20+ modern themes or create your own personalized gaming environment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Performance Optimized</h3>
+                        <p class="feature-description">Lightning-fast loading times and smooth gameplay with our optimized game engine.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Mobile Responsive</h3>
+                        <p class="feature-description">Play anywhere, anytime with our fully responsive design that works on all devices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">AI-Powered Learning</h3>
+                        <p class="feature-description">Personalized learning paths and adaptive difficulty levels powered by advanced AI.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Social Features</h3>
+                        <p class="feature-description">Connect with friends, compete in tournaments, and share achievements.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Panel -->
+            <section class="settings" id="settings">
+                <div class="settings-panel">
+                    <div class="settings-header">
+                        <i class="fas fa-sliders-h"></i>
+                        Advanced Settings
+                    </div>
+                    <div class="settings-content">
+                        <div class="setting-item">
+                            <span class="setting-label">Anti-Detection Mode</span>
+                            <div class="setting-control">
+                                <div class="toggle active" id="antiDetection">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Tab Disguiser</span>
+                            <div class="setting-control">
+                                <div class="toggle" id="tabDisguiser">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Panic Key</span>
+                            <div class="setting-control">
+                                <button class="btn btn-primary" onclick="openPanicKeyModal()">Set Key</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Theme</span>
+                            <div class="setting-control">
+                                <div class="custom-select" id="themeSelect">
+                                    <div class="select-trigger">
+                                        <span>Modern Dark</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="select-options">
+                                        <div class="select-option" data-value="modern-dark">Modern Dark</div>
+                                        <div class="select-option" data-value="light-mode">Light Mode</div>
+                                        <div class="select-option" data-value="nature-green">Nature Green</div>
+                                        <div class="select-option" data-value="ocean-blue">Ocean Blue</div>
+                                        <div class="select-option" data-value="sunset-orange">Sunset Orange</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Music</span>
+                            <div class="setting-control">
+                                <div class="custom-select" id="musicSelect">
+                                    <div class="select-trigger">
+                                        <span>Ambient Study</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="select-options">
+                                        <div class="select-option" data-value="ambient-study">Ambient Study</div>
+                                        <div class="select-option" data-value="lofi-beats">Lo-Fi Beats</div>
+                                        <div class="select-option" data-value="nature-sounds">Nature Sounds</div>
+                                        <div class="select-option" data-value="upbeat-energetic">Upbeat Energetic</div>
+                                        <div class="select-option" data-value="off">Off</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Performance Stats</span>
+                            <div class="setting-control">
+                                <div class="toggle active" id="performanceStats">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Games Section -->
+            <section class="games-section" id="games">
+                <div class="section-header">
+                    <h2 class="section-title">Educational Games Library</h2>
+                    <p>Choose from our curated collection of educational games designed to make learning fun and engaging.</p>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Math Quest</h3>
+                            <p class="game-description">Embark on an adventure through mathematical concepts and problem-solving challenges.</p>
+                            <div class="game-tags">
+                                <span class="tag">Mathematics</span>
+                                <span class="tag">Adventure</span>
+                                <span class="tag">Grades 3-8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Word Explorer</h3>
+                            <p class="game-description">Expand your vocabulary and language skills through interactive word games.</p>
+                            <div class="game-tags">
+                                <span class="tag">Language</span>
+                                <span class="tag">Vocabulary</span>
+                                <span class="tag">All Ages</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Geo Challenge</h3>
+                            <p class="game-description">Explore the world and learn about geography, cultures, and landmarks.</p>
+                            <div class="game-tags">
+                                <span class="tag">Geography</span>
+                                <span class="tag">Culture</span>
+                                <span class="tag">Grades 4-12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Science Lab</h3>
+                            <p class="game-description">Conduct virtual experiments and learn scientific concepts through hands-on activities.</p>
+                            <div class="game-tags">
+                                <span class="tag">Science</span>
+                                <span class="tag">Experiments</span>
+                                <span class="tag">Grades 5-10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Code Master</h3>
+                            <p class="game-description">Learn programming concepts through interactive coding challenges and puzzles.</p>
+                            <div class="game-tags">
+                                <span class="tag">Programming</span>
+                                <span class="tag">Logic</span>
+                                <span class="tag">Grades 6-12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">Time Traveler</h3>
+                            <p class="game-description">Journey through history and experience major events through interactive storytelling.</p>
+                            <div class="game-tags">
+                                <span class="tag">History</span>
+                                <span class="tag">Storytelling</span>
+                                <span class="tag">Grades 3-10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Status Bar -->
+    <div class="status-bar" id="statusBar">
+        <div class="status-item">
+            <span>FPS:</span>
+            <span class="status-value" id="fps">60</span>
+        </div>
+        <div class="status-item">
+            <span>Ping:</span>
+            <span class="status-value" id="ping">12ms</span>
+        </div>
+        <div class="status-item">
+            <span>CPU:</span>
+            <span class="status-value" id="cpu">15%</span>
+        </div>
+    </div>
+
+    <!-- Panic Key Modal -->
+    <div class="modal" id="panicKeyModal">
+        <div class="modal-content">
+            <h3>Set Panic Key</h3>
+            <p>Press any key to set it as your panic key</p>
+            <input type="text" class="panic-key-input" id="panicKeyInput" placeholder="Press a key..." readonly>
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="savePanicKey()">Save</button>
+                <button class="btn btn-secondary" onclick="closePanicKeyModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+            navMenu.style.position = 'absolute';
+            navMenu.style.top = '100%';
+            navMenu.style.left = '0';
+            navMenu.style.right = '0';
+            navMenu.style.background = 'rgba(15, 23, 42, 0.95)';
+            navMenu.style.flexDirection = 'column';
+            navMenu.style.padding = '1rem';
+            navMenu.style.backdropFilter = 'blur(20px)';
+        });
+
+        // Toggle switches
+        document.querySelectorAll('.toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Custom select dropdowns
+        document.querySelectorAll('.custom-select').each(select => {
+            const trigger = select.querySelector('.select-trigger');
+            const options = select.querySelector('.select-options');
+            
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.classList.toggle('active');
+            });
+            
+            options.querySelectorAll('.select-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    trigger.querySelector('span').textContent = option.textContent;
+                    options.classList.remove('active');
+                });
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.select-options').forEach(options => {
+                options.classList.remove('active');
+            });
+        });
+
+        // Panic key modal
+        function openPanicKeyModal() {
+            document.getElementById('panicKeyModal').classList.add('active');
+            document.getElementById('panicKeyInput').focus();
+        }
+
+        function closePanicKeyModal() {
+            document.getElementById('panicKeyModal').classList.remove('active');
+        }
+
+        function savePanicKey() {
+            const key = document.getElementById('panicKeyInput').value;
+            if (key) {
+                localStorage.setItem('panicKey', key);
+                alert(`Panic key set to: ${key}`);
+                closePanicKeyModal();
+            }
+        }
+
+        // Panic key detection
+        document.addEventListener('keydown', (e) => {
+            const panicKey = localStorage.getItem('panicKey');
+            if (panicKey && e.key === panicKey) {
+                window.location.href = 'https://www.google.com';
+            }
+        });
+
+        // Panic key input
+        document.getElementById('panicKeyInput').addEventListener('keydown', (e) => {
+            e.preventDefault();
+            e.target.value = e.key;
+        });
+
+        // Performance monitoring
+        let lastTime = performance.now();
+        let frames = 0;
+
+        function updatePerformanceStats() {
+            frames++;
+            const currentTime = performance.now();
+            
+            if (currentTime >= lastTime + 1000) {
+                const fps = Math.round((frames * 1000) / (currentTime - lastTime));
+                document.getElementById('fps').textContent = fps;
+                
+                // Simulate ping and CPU usage
+                const ping = Math.floor(Math.random() * 20) + 5;
+                const cpu = Math.floor(Math.random() * 30) + 5;
+                
+                document.getElementById('ping').textContent = `${ping}ms`;
+                document.getElementById('cpu').textContent = `${cpu}%`;
+                
+                frames = 0;
+                lastTime = currentTime;
+            }
+            
+            requestAnimationFrame(updatePerformanceStats);
+        }
+
+        updatePerformanceStats();
+
+        // Game card interactions
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.game-title').textContent;
+                alert(`Loading ${title}...`);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Theme switching
+        const themeSelect = document.getElementById('themeSelect');
+        const root = document.documentElement;
+
+        const themes = {
+            'modern-dark': {
+                '--primary-color': '#6366f1',
+                '--secondary-color': '#8b5cf6',
+                '--light-bg': '#0f172a',
+                '--text-primary': '#f1f5f9',
+                '--text-secondary': '#94a3b8'
+            },
+            'light-mode': {
+                '--primary-color': '#3b82f6',
+                '--secondary-color': '#8b5cf6',
+                '--light-bg': '#f8fafc',
+                '--text-primary': '#1e293b',
+                '--text-secondary': '#64748b'
+            },
+            'nature-green': {
+                '--primary-color': '#10b981',
+                '--secondary-color': '#059669',
+                '--light-bg': '#f0fdf4',
+                '--text-primary': '#064e3b',
+                '--text-secondary': '#065f46'
+            },
+            'ocean-blue': {
+                '--primary-color': '#0ea5e9',
+                '--secondary-color': '#0284c7',
+                '--light-bg': '#f0f9ff',
+                '--text-primary': '#0c4a6e',
+                '--text-secondary': '#075985'
+            },
+            'sunset-orange': {
+                '--primary-color': '#f59e0b',
+                '--secondary-color': '#d97706',
+                '--light-bg': '#fffbeb',
+                '--text-primary': '#78350f',
+                '--text-secondary': '#92400e'
+            }
+        };
+
+        themeSelect.addEventListener('change', (e) => {
+            const theme = themes[e.target.value];
+            if (theme) {
+                Object.keys(theme).forEach(key => {
+                    root.style.setProperty(key, theme[key]);
+                });
+            }
+        });
+
+        // Initialize with saved theme
+        const savedTheme = localStorage.getItem('theme') || 'modern-dark';
+        if (themes[savedTheme]) {
+            themeSelect.querySelector('.select-trigger span').textContent = 
+                themeSelect.querySelector(`[data-value="${savedTheme}"]`).textContent;
+            Object.keys(themes[savedTheme]).forEach(key => {
+                root.style.setProperty(key, themes[savedTheme][key]);
+            });
+        }
+
+        // Save theme preference
+        themeSelect.addEventListener('change', (e) => {
+            localStorage.setItem('theme', e.target.value);
+        });
+
+        // Tab disguiser functionality
+        document.getElementById('tabDisguiser').addEventListener('click', function() {
+            if (this.classList.contains('active')) {
+                document.title = 'Google Docs - Educational Document';
+                const icon = document.querySelector('link[rel="icon"]') || document.createElement('link');
+                icon.rel = 'icon';
+                icon.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📄</text></svg>';
+                document.head.appendChild(icon);
+            } else {
+                document.title = 'EduPortal Pro - Enhanced Educational Gaming Platform';
+                const icon = document.querySelector('link[rel="icon"]');
+                if (icon) icon.remove();
+            }
+        });
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.classList.contains('btn-secondary')) {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="loader"></span> Loading...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 1500);
+                }
+            });
+        });
+
+        // Initialize with saved settings
+        window.addEventListener('load', () => {
+            // Restore panic key
+            const savedPanicKey = localStorage.getItem('panicKey');
+            if (savedPanicKey) {
+                document.getElementById('panicKeyInput').placeholder = `Current: ${savedPanicKey}`;
+            }
+
+            // Check for saved theme
+            const savedThemePreference = localStorage.getItem('theme');
+            if (savedThemePreference && themes[savedThemePreference]) {
+                const themeOption = document.querySelector(`#themeSelect .select-option[data-value="${savedThemePreference}"]`);
+                if (themeOption) {
+                    document.querySelector('#themeSelect .select-trigger span').textContent = themeOption.textContent;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
